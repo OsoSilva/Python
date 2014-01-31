@@ -11,8 +11,8 @@ def modulo(n):
 def fase(n):
 	return degrees(cmath.phase(complex(n.real,n.imag)))
 
-def potencia(n):
-	return n**2
+def potencia(n,m):
+	return n**m
 
 def suma(n,m):
 	return n+m
@@ -43,7 +43,7 @@ def main():
 			Elige una opción
 			[1] Módulo de un número
 			[2] Fase de un número
-			[3] Potencia de un número
+			[3] Potencia de un número (n^m)
 			[4] Suma de dos números
 			[5] Resta de dos números
 			[6] Multiplicación de dos números
@@ -51,17 +51,17 @@ def main():
 			[8] Salir
 		"""
 		opc = input("> ")
-		if(opc>=1 and opc<=3):
+		if(opc>=1 and opc<=2):
 			try:
 				n = input("Numero> ")
 				x = switch[opc](n)
 				print "Resultado: "+str(x)+"\n"
 			except:
 				print "Número no válido"
-		elif(opc>3 and opc<8):
+		elif(opc>2 and opc<8):
 			try:
-				n = input("Número A> ")
-				m = input("Número B> ")
+				n = input("n> ")
+				m = input("m> ")
 				x = switch[opc](n,m)
 				print "Resultado: "+str(x)+"\n"
 			except:
