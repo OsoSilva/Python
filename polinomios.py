@@ -3,7 +3,7 @@ class Polinomio:
     def __init__(self,pol=[]):
         """Constructor: Recibe una lista como parametros,
         la cual sera el polinomio. La posicion 0 corresponde al grado
-        cero y la ultima posicion al grado enesimo"""
+        enesimo y la ultima posicion al cero"""
         pol.reverse() #Invertimos la lista
         self.pol = pol
 
