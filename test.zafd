@@ -1,0 +1,28 @@
+:-
+	Autómata: La longitud de la cadena debe ser multiplo de 3
+-:
+
+:- 
+title Multiplo de 3
+-:
+
+alphabet 
+	0 1
+end
+
+state i
+	set initial
+	set final
+	goto l=1 0
+	goto l=1 1
+end
+
+state l=1
+	goto l=2 0
+	goto l=2 1
+end
+
+state l=2
+	goto i 0
+	goto i 1
+end

@@ -1,0 +1,63 @@
+# Archivo .zafd
+# El formato del archivo es el siguiente
+
+:- 
+ESTE ES UN COMENTARIO, INICIAN CON ":-" y terminan con "-:"
+
+SINTAXIS: 
+
+state nombreEdo
+    set initial/final
+    goto edo valor
+end  
+
+alphabet
+    0 1
+end
+
+----------------------------------------------------------------------------------------
+ name nombreEdo     : Define el nombre del estado
+ set final/initial  : Define un estado como inicial o final
+ goto edo valor     : Define el estado a donde va a ir y el valor con el que se dirige
+ end                : Cierre de la definicion
+ alphabet           : Inicia la definicion del alfabeto
+ ---------------------------------------------------------------------------------------
+ -:
+
+:-
+    Automat que verifica si un numero binario es multiplo de 5
+-:
+
+alphabet 
+    1 0
+end
+
+state r=0
+    set initial
+    goto r=1 1
+    goto r=0 0
+    set final
+end
+
+state r=1
+    goto r=11 1
+    goto r=10 0
+end
+
+state r=11
+    goto r=1 0
+    goto r=10 1
+end
+
+state r=10
+    goto r=100 0
+    goto r=0 1
+end
+
+state r=100
+    goto r=100 1
+    goto r=11 0
+end
+
+
+
