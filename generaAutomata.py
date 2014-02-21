@@ -33,8 +33,6 @@ class AFD(object):
         """Regresa todos los estados del automata"""
         return self.__states
 
-    #Variables que se usaran durante la ejecucion del Automata
-
     #Metodos privados
     
     def __init__(self,myFile):
@@ -71,7 +69,6 @@ class AFD(object):
             pass
 
     def __state(self,l):
-        #print l
         if len(l)!=1 and l[0]=="state":
             self.__states.append(l[1])
             self.currentState = l[1]
@@ -81,7 +78,6 @@ class AFD(object):
             elif l[1]=="final":
                 self.__final.append(self.currentState)
         elif l[0]=="goto":
-            #print l[1],l[2]
             self.__transition[(self.currentState,l[2])] = l[1]
             
     def __parser(self,l):
@@ -95,7 +91,6 @@ class AFD(object):
                 self.stateFlag = False
             if(self.sigmaFlag):
                 self.sigmaFlag = False
-            #print "END"
         elif self.sigmaFlag:
             #Si esta encendida la bandera del alfabeto
             #se guarda el alfabeto
@@ -174,7 +169,7 @@ class AFD(object):
 
     def mv(self):
         """Metodo que mueve al automata en los estados"""
-        self.cState = self.initialS    #Estado actual
+        self.cState = self.initialS    #Estado actual (current state)
         for char in self.string:
             for element in self.delta:
                 #print self.cState
