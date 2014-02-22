@@ -1,6 +1,9 @@
 #!/bin/python
 # -*- encoding: utf-8 -*-
 
+#Hernandez Alarcon Jesus Alfredo
+#Lenguajes Formales y Automatas
+
 class AFD(object):
     """Clase que genera los 5 elementos de una AFD, a partir
     de un archivo proporcionado por el usuario."""
@@ -9,7 +12,9 @@ class AFD(object):
     sigmaFlag = False   #Bandera que indica definicion del alfabeto
     endFlag = False     #Bandera que indica final de una definicion
     stateFlag = False   #Bandera que inidica inicio de la definicion de un estado
-    currentState = ""   #Guarda el estado actual
+    currentState = ""   #Guarda el estado actual (el que se mueve durante la lectura de los estados)
+    alphaFlag = True    #Bandera que indica si el caracter leido pertenece al conjunto de
+                        #el alfabeto (por defecto es verdadero)
 
     #Elementos del Automata Finito Deterministico
     @property
@@ -47,6 +52,8 @@ class AFD(object):
         self.__states = []      #Todos los estados
         self.__transition = {}  #F de transicion
         self.string =  ""
+        #Leemos el Automata
+        self.readAFD()
 
     def __alphabet(self,sigma):
         """Metodo privado que asigna el alfabeto (sigma)"""
@@ -108,12 +115,11 @@ class AFD(object):
             self.__state(l)
         elif(l[0]=="state"):
             self.nStates+=1
-            #print "Estado encontrado: "+str(l[1])
             #Apagamos la bandera de END
             self.endFlag = False
             #Prendemos bandera de Estados
             self.stateFlag = True 
-            #Hacer algo con los estados
+            #Parseo de los estados
             self.__state(l)
         elif(l[0]=="alphabet"):
             #print "Alfabeto"
@@ -163,7 +169,9 @@ class AFD(object):
     def isCorrect(self):
         """Regresa true si la cadena es valida, en caso contrario +
             False"""
-        if self.cState in self.finalSts:
+        if ((self.cState in self.finalSts) and (self.alphaFlag)):
+            #Si el estado final esta en el conjunto de los estados finales y
+            #los caracteres pertenecen al alfabeto, entonces se regresa True
             return True
         return False
 
@@ -172,10 +180,16 @@ class AFD(object):
         self.cState = self.initialS    #Estado actual (current state)
         for char in self.string:
             for element in self.delta:
-                #print self.cState
-                if (self.cState == element[0]) and (char == element[1]):
-                    self.cState = self.delta[(self.cState,char)]
+                if char in self.sigma:
+                    if (self.cState == element[0]) and (char == element[1]):
+                        self.cState = self.delta[(self.cState,char)]
+                        #print self.cState
+                        break
+                else:
+                    #print "No esta dentro del alfabeto"
+                    self.alphaFlag = False
                     break
+                    
                 
     def verify(self):
         """Verifica si un automata es correcto"""
@@ -191,8 +205,6 @@ def main():
     while flag:
         try:
             a = AFD(f)
-            #Leemos el Automata
-            a.readAFD()
             #Mostramos el Automata
             a.status()
             #Ingresamos una Cadena
